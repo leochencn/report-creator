@@ -1,0 +1,360 @@
+% =============================================================================
+% 技术调研报告 Beamer 模板
+% 使用 ctex 宏包支持中文，适合技术演示
+% =============================================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% -----------------------------------------------------------------------------
+% 基础宏包
+% -----------------------------------------------------------------------------
+\usepackage[UTF8,fontset=windows]{ctex}          % 中文支持（Windows字体）
+\usepackage{geometry}
+\usepackage{graphicx}                            % 图片支持
+\usepackage{xcolor}                              % 颜色支持
+\usepackage{tikz}                                % 绘图
+\usepackage{pgfplots}                            % 图表
+\usepackage{booktabs}                            % 专业表格
+\usepackage{multirow}                            % 表格多行合并
+\usepackage{array}                               % 表格增强
+\usepackage{colortbl}                            % 表格颜色
+\usepackage{enumitem}                            % 列表增强
+\usepackage{fontawesome5}                        % 图标
+\usepackage{hyperref}                            % 超链接
+
+% TikZ库
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, decorations.pathreplacing}
+\pgfplotsset{compat=1.18}
+
+% -----------------------------------------------------------------------------
+% 主题和颜色配置
+% -----------------------------------------------------------------------------
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% 自定义颜色 - 科技感蓝色调
+\definecolor{primarycolor}{RGB}{41, 98, 255}      % 主色：科技蓝
+\definecolor{secondarycolor}{RGB}{0, 150, 136}    % 辅色：青绿色
+\definecolor{accentcolor}{RGB}{255, 111, 97}      % 强调色：珊瑚橙
+\definecolor{darkbg}{RGB}{30, 40, 60}             % 深色背景
+\definecolor{lightgray}{RGB}{245, 245, 245}       % 浅灰背景
+\definecolor{textgray}{RGB}{80, 80, 80}           % 文字灰
+
+% 设置主题颜色
+\setbeamercolor{palette primary}{bg=primarycolor,fg=white}
+\setbeamercolor{palette secondary}{bg=secondarycolor,fg=white}
+\setbeamercolor{palette tertiary}{bg=darkbg,fg=white}
+\setbeamercolor{structure}{fg=primarycolor}
+\setbeamercolor{title}{fg=white,bg=primarycolor}
+\setbeamercolor{frametitle}{fg=white,bg=primarycolor}
+\setbeamercolor{block title}{bg=primarycolor,fg=white}
+\setbeamercolor{block body}{bg=lightgray,fg=black}
+\setbeamercolor{block title alerted}{bg=accentcolor,fg=white}
+\setbeamercolor{block body alerted}{bg=lightgray,fg=black}
+\setbeamercolor{item}{fg=primarycolor}
+\setbeamercolor{subitem}{fg=secondarycolor}
+\setbeamercolor{itemize item}{fg=primarycolor}
+\setbeamercolor{itemize subitem}{fg=secondarycolor}
+\setbeamercolor{enumerate item}{fg=primarycolor}
+\setbeamercolor{section in toc}{fg=primarycolor}
+\setbeamercolor{subsection in toc}{fg=secondarycolor}
+
+% 设置字体
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\normalsize}
+
+% 取消导航符号
+\setbeamertemplate{navigation symbols}{}
+
+% 添加页码
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+        \end{beamercolorbox}}%
+    \vskip0pt%
+}
+
+% 项目符号样式
+\setbeamertemplate{itemize item}{\scriptsize\raisebox{0.5ex}{\textbullet}}
+\setbeamertemplate{itemize subitem}{\tiny\raisebox{0.5ex}{$\circ$}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raisebox{0.5ex}{\textendash}}
+
+% -----------------------------------------------------------------------------
+% 自定义命令
+% -----------------------------------------------------------------------------
+
+% 重点强调
+\newcommand{\highlight}[1]{\textcolor{accentcolor}{\textbf{#1}}}
+
+% 技术术语
+\newcommand{\tech}[1]{\texttt{\textcolor{primarycolor}{#1}}}
+
+% 数据高亮框
+\newcommand{\databox}[2]{%
+    \begin{tikzpicture}
+        \node[fill=lightgray, rounded corners=5pt, inner sep=10pt, text width=#1] {#2};
+    \end{tikzpicture}
+}
+
+% 时间线条目
+\newcommand{\timelineitem}[3]{%
+    \textbf{#1} \hfill \textcolor{textgray}{\small #2}\\
+    #3\vspace{0.5em}
+}
+
+% -----------------------------------------------------------------------------
+% 文档信息（请在主文件中覆盖这些定义）
+% -----------------------------------------------------------------------------
+\title[技术调研报告]{技术主题调研报告}
+\subtitle{技术发展、市场现状与未来趋势分析}
+\author{调研团队}
+\institute{技术研究院}
+\date{\today}
+
+% =============================================================================
+% 文档开始（以下为示例内容，实际使用时请替换）
+% =============================================================================
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% 标题页
+% -----------------------------------------------------------------------------
+{
+\setbeamertemplate{footline}{}
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[opacity=0.1] at ([xshift=4cm,yshift=-2cm]current page.north west) {
+            \fontsize{120}{120}\selectfont\faIcon{microchip}
+        };
+    \end{tikzpicture}
+\end{frame}
+}
+
+% -----------------------------------------------------------------------------
+% 目录
+% -----------------------------------------------------------------------------
+\begin{frame}{目录}
+    \tableofcontents
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第一章：研究背景
+% -----------------------------------------------------------------------------
+\section{研究背景}
+
+\begin{frame}{研究背景}
+    \begin{block}{研究动机}
+        随着人工智能技术的快速发展，\highlight{编程智能体}（Coding Agents）正在成为软件开发领域的重要趋势。
+    \end{block}
+    
+    \vspace{0.5em}
+    \textbf{研究目标：}
+    \begin{itemize}
+        \item 梳理编程智能体技术的发展历程
+        \item 分析当前主流产品与技术路线
+        \item 识别关键技术挑战与突破
+        \item 预测未来发展趋势
+    \end{itemize}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第二章：技术发展历史
+% -----------------------------------------------------------------------------
+\section{技术发展历史}
+
+\begin{frame}{技术发展历程}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{itemize}
+            \item \textbf{2018-2020}：代码补全工具时代
+            \item \textbf{2021-2022}：大模型代码生成
+            \item \textbf{2023}：智能体概念兴起
+            \item \textbf{2024}：端到端编程智能体
+        \end{itemize}
+        
+        \column{0.4\textwidth}
+        \begin{tikzpicture}[scale=0.7]
+            \foreach \y/\year/\label in {3/2018/工具, 2/2021/生成, 1/2023/智能体, 0/2024/端到端} {
+                \fill[primarycolor] (0,\y) circle (0.15);
+                \node[right] at (0.3,\y) {\small \year};
+                \node[right, text=textgray] at (1.2,\y) {\small \label};
+                \ifnum\y>0
+                    \draw[primarycolor, thick] (0,\y) -- (0,\the\numexpr\y-1\relax);
+                \fi
+            }
+        \end{tikzpicture}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第三章：市场现状与竞品分析
+% -----------------------------------------------------------------------------
+\section{市场现状与竞品分析}
+
+\begin{frame}{主要参与者}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{国际厂商}
+        \begin{itemize}
+            \item GitHub Copilot (Microsoft)
+            \item Cursor AI
+            \item Amazon CodeWhisperer
+            \item Google Duet AI
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{国内厂商}
+        \begin{itemize}
+            \item 通义灵码 (阿里云)
+            \item CodeGeeX (智谱AI)
+            \item 文心快码 (百度)
+            \item iFlyCode (科大讯飞)
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{竞品对比}
+    \begin{table}
+        \centering
+        \small
+        \rowcolors{2}{lightgray}{white}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{产品} & \textbf{代码生成} & \textbf{对话能力} & \textbf{价格} \\
+            \midrule
+            Copilot & \faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star} & \faIcon{star}\faIcon{star}\faIcon{star} & \$10/月 \\
+            Cursor & \faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star} & \faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star} & 免费/\$20 \\
+            通义灵码 & \faIcon{star}\faIcon{star}\faIcon{star}\faIcon{star} & \faIcon{star}\faIcon{star}\faIcon{star} & 免费 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第四章：关键技术解析
+% -----------------------------------------------------------------------------
+\section{关键技术解析}
+
+\begin{frame}{技术架构}
+    \begin{center}
+    \begin{tikzpicture}[
+        node distance=1.5cm,
+        box/.style={rectangle, draw=primarycolor, fill=lightgray, rounded corners, 
+                    minimum width=2.5cm, minimum height=0.8cm, align=center, font=\small},
+        arrow/.style={-{Stealth[length=3mm]}, thick, primarycolor}
+    ]
+        \node[box] (input) {用户输入};
+        \node[box, right=of input] (parse) {意图解析};
+        \node[box, right=of parse] (plan) {任务规划};
+        \node[box, below=of plan] (exec) {代码生成};
+        \node[box, left=of exec] (verify) {验证测试};
+        \node[box, left=of verify] (output) {结果输出};
+        
+        \draw[arrow] (input) -- (parse);
+        \draw[arrow] (parse) -- (plan);
+        \draw[arrow] (plan) -- (exec);
+        \draw[arrow] (exec) -- (verify);
+        \draw[arrow] (verify) -- (output);
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{核心技术挑战}
+    \begin{alertblock}{主要挑战}
+        \begin{itemize}
+            \item \textbf{上下文理解}：大型代码库的语义理解
+            \item \textbf{长程依赖}：跨文件的引用和修改
+            \item \textbf{安全性}：生成代码的安全漏洞
+            \item \textbf{可解释性}：生成逻辑的透明性
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第五章：未来发展趋势
+% -----------------------------------------------------------------------------
+\section{未来发展趋势}
+
+\begin{frame}{趋势预测}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{短期（1-2年）}
+            \begin{itemize}
+                \item 多模态输入支持
+                \item 更精准的上下文感知
+                \item 与开发工具深度集成
+            \end{itemize}
+        \end{block}
+        
+        \column{0.5\textwidth}
+        \begin{block}{长期（3-5年）}
+            \begin{itemize}
+                \item 端到端软件生成
+                \item 自主调试与优化
+                \item 软件工程全流程覆盖
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 第六章：总结
+% -----------------------------------------------------------------------------
+\section{总结与展望}
+
+\begin{frame}{核心结论}
+    \begin{enumerate}
+        \item 编程智能体技术正处于\highlight{快速发展期}
+        \item 大语言模型是核心驱动力
+        \item 多智能体协作是未来方向
+        \item 安全性和可控性是关键考量
+    \end{enumerate}
+    
+    \vspace{1em}
+    \begin{center}
+        \databox{0.8\textwidth}{
+            \centering
+            \textbf{建议}：持续关注技术演进，适时引入工具提升效率
+        }
+    \end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% 结束页
+% -----------------------------------------------------------------------------
+{
+\setbeamertemplate{footline}{}
+\begin{frame}
+    \begin{center}
+        \Huge \textcolor{primarycolor}{感谢聆听}
+        
+        \vspace{1em}
+        
+        \Large Q \& A
+        
+        \vspace{2em}
+        
+        \normalsize
+        \textcolor{textgray}{联系邮箱：research@example.com}
+    \end{center}
+    
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[opacity=0.05] at (current page.center) {
+            \fontsize{200}{200}\selectfont\faIcon{code}
+        };
+    \end{tikzpicture}
+\end{frame}
+}
+
+\end{document}
